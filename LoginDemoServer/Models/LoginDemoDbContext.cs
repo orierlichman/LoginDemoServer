@@ -15,6 +15,8 @@ public partial class LoginDemoDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Grade> Grades { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,9 +25,16 @@ public partial class LoginDemoDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Grade>(entity =>
+        {
+            entity.HasOne(d => d.EmailNavigation).WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Grade__Email__37A5467C");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Email).HasName("PK__Users__A9D105358B4E29D2");
+            entity.HasKey(e => e.Email).HasName("PK__Users__A9D10535E38DC7DB");
         });
 
         OnModelCreatingPartial(modelBuilder);
