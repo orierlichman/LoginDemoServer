@@ -22,5 +22,5 @@ public partial class Grade
     public string Email { get; set; } = null!;
 
     [ForeignKey("Email")]
-    public virtual User EmailNavigation { get; set; } = null!;
+    public virtual User? EmailNavigation { get; set; } = null!;
 }
